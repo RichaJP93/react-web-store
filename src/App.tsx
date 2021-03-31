@@ -45,7 +45,7 @@ const App = () => {
 
   const handleAddToCart = (clickedItem: CartItemType) => {
     setCartItems(prev => {
-      
+
       const isItemInCart = prev.find(item => item.id === clickedItem.id)
 
       if (isItemInCart) {
@@ -60,7 +60,18 @@ const App = () => {
     })
   };
 
-  const handleRemoveFromCart = () => null;
+  const handleRemoveFromCart = (id: number) => {
+    setCartItems(prev => (
+      prev.reduce((accumulator, item) => {
+        if (item.id === id) {
+          if(item.amount === 1) return accumulator;
+          return [...accumulator, {...item, amount: item.amount -1}]
+        } else {
+          return [...accumulator, item]
+        }
+      }, [] as CartItemType[])
+    ))
+  };
 
   if(isLoading) return <LinearProgress />;
   if(error) return <div>Something went wrong...</div>
