@@ -45,9 +45,7 @@ const App = () => {
 
   const handleAddToCart = (clickedItem: CartItemType) => {
     setCartItems(prev => {
-
       const isItemInCart = prev.find(item => item.id === clickedItem.id)
-
       if (isItemInCart) {
         return prev.map(item => 
           item.id === clickedItem.id 
@@ -73,6 +71,18 @@ const App = () => {
     ))
   };
 
+  const handleClearItem = (id: number) => {
+    setCartItems(prev => (
+      prev.reduce((accumulator, item) => {
+        if (item.id === id) {
+          return accumulator;
+        } else {
+          return [...accumulator, item]
+        }
+      }, [] as CartItemType[])
+    ))
+  }
+
   if(isLoading) return <LinearProgress />;
   if(error) return <div>Something went wrong...</div>
 
@@ -83,6 +93,7 @@ const App = () => {
           cartItems={cartItems} 
           addToCart={handleAddToCart}
           removeFromCart={handleRemoveFromCart}
+          clearItem = {handleClearItem}
         />
       </Drawer>
       <StyledButton onClick={()=> setCartOpen(true)}>

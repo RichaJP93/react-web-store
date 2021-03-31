@@ -1,6 +1,7 @@
 import Button from '@material-ui/core/Button';
 
 import {CartItemType} from '../../App';
+import CancelIcon from '@material-ui/icons/Cancel';
 
 import {Wrapper} from './CartItem.styles';
 
@@ -8,8 +9,10 @@ type Props = {
   item: CartItemType;
   addToCart: (clickedItem: CartItemType) => void;
   removeFromCart: (id: number) => void;
+  clearItem: (id: number) => void;
 }
-const CartItem: React.FC<Props> = ({item, addToCart, removeFromCart}) => (
+
+const CartItem: React.FC<Props> = ({item, addToCart, removeFromCart, clearItem}) => (
   <Wrapper>
     <div>
       <h3>{item.title}</h3>
@@ -38,6 +41,7 @@ const CartItem: React.FC<Props> = ({item, addToCart, removeFromCart}) => (
       </div>
     </div>
     <img src={item.image} alt={item.title} />
+    <CancelIcon onClick={()=> clearItem(item.id)}/>
   </Wrapper>
 );
 
