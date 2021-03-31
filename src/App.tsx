@@ -38,13 +38,27 @@ const App = () => {
     getProducts
   );
 
-  console.log(data)
 
   const getTotalItems = (items: CartItemType[]) => {
     return items.reduce((accumulator: number, item) => accumulator + item.amount, 0)
   };
 
-  const handleAddToCart = (clickedItem: CartItemType) => null;
+  const handleAddToCart = (clickedItem: CartItemType) => {
+    setCartItems(prev => {
+      
+      const isItemInCart = prev.find(item => item.id === clickedItem.id)
+
+      if (isItemInCart) {
+        return prev.map(item => 
+          item.id === clickedItem.id 
+          ? {...item, amount: item.amount + 1}
+          : item
+        )
+      }
+
+      return [...prev, {...clickedItem, amount: 1}];
+    })
+  };
 
   const handleRemoveFromCart = () => null;
 
